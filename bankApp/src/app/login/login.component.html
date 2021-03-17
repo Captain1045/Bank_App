@@ -1,25 +1,30 @@
-<div class="container-fluid">
+<div  class="container-fluid">
     <div class="row">
         <div class="col-lg-4 col-md-4 col-12">
 
         </div>
         <div class="col-lg-4 col-md-4 col-12">
             <h1>Private Bank</h1>
+
             <!-- {{temp_data}}
             <br>{{user_acc}}
             <br>{{user_pwd}} -->
-            <form style="margin-left: 20px; margin-right: 20px;">
+            <form style="margin-left: 20px; margin-top: 30px; margin-right: 20px;">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Account Number</label>
-                    <input type="text" [value]="user_acc" (change)="getUsername($event)" class="form-control" id="user_accno" aria-describedby="emailHelp">
+                    <!-- <input type="text" [value]="user_acc" (change)="getUsername($event)" class="form-control" id="user_accno" aria-describedby="emailHelp"> -->
+                    <!-- <input type="text" #user_acc class="form-control" id="user_accno" aria-describedby="emailHelp"> -->
+                    <input type="text" [(ngModel)]="user_acc" name="user_acconut_number" class="form-control" id="user_accno" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" (change)="getPassword($event)" class="form-control" id="user_pass">
+                    <!-- <input type="password" (change)="getPassword($event)" class="form-control" id="user_pass"> -->
+                    <!-- <input type="password" #user_pwd class="form-control" id="user_pass"> -->
+                    <input type="password" [(ngModel)]="user_pwd" name="user_password" class="form-control" id="user_pass">
                 </div>
-                <button type="button" class="btn btn-primary" (click)="login()">Login</button>
-                <button style="margin-left: 10px;" type="button" class="btn btn-primary">Register</button>
-                
+                <button style="background-color: green;" type="button" class="btn btn-primary" (click)="login()">Login</button>
+                <button style="margin-left: 10px; background-color: green;" type="button" class="btn btn-primary" (click)="register()">Register</button>
+
             </form>
 
 
@@ -29,30 +34,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-4 col-md-4 col-12">
-
-        </div>
-        <div class="col-lg-4 col-md-4 col-12">
-            <h1>Private Bank 2</h1>
-            <form style="margin-left: 20px; margin-right: 20px;">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Account Number</label>
-                    <input type="text" (change)=#user_name class="form-control" id="user_accno" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" (change)=#user_pass class="form-control" id="user_pass">
-                </div>
-                <button type="button" class="btn btn-primary" (click)="login(user_name,user_pass)">Submit</button>
-            </form>
-
-
-        </div>
-        <div class="col-lg-4 col-md-4 col-12">
-
-        </div>
-    </div>
-</div> -->
