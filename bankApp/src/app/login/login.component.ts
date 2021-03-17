@@ -17,26 +17,26 @@ export class LoginComponent implements OnInit {
   user_acc = "";
   user_pwd = "";
   data = this.accountDetails;
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
-  getUsername(event: any) {
-    this.user_acc = event.target.value;
-    console.log(this.user_acc);
-  }
-  getPassword(event: any) {
-    this.user_pwd = event.target.value;
-    console.log(this.user_pwd);
-  }
+  // getUsername(event: any) {
+  //   this.user_acc = event.target.value;
+  //   console.log(this.user_acc);
+  // }
+  // getPassword(event: any) {
+  //   this.user_pwd = event.target.value;
+  //   console.log(this.user_pwd);
+  // }
   login() {
     // var user_acc=acc.value;
     // var user_pwd=pwd.value;
-    var acc=this.user_acc;
-    var pwd=this.user_pwd;
+    var acc = this.user_acc;
+    var pwd = this.user_pwd;
     //console.log(acc,this.user_acc);
-    
-    
+
+
 
     if (acc in this.data) {
       //console.log(data[user_acc]["pass"]);
@@ -56,8 +56,7 @@ export class LoginComponent implements OnInit {
     }
 
   }
-  register()
-  {
+  register() {
     this.router.navigateByUrl("registration");
   }
 }
