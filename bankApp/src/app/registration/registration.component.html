@@ -1,39 +1,44 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-4 col-md-4 col-12">
+<form (ngSubmit)="Register()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-12">
 
-        </div>
-        <div class="col-lg-4 col-md-4 col-12">
-            <h1>Register Here!</h1><br><br>
-            <form style="margin-left: 20px; margin-right: 20px;">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Account Number</label>
-                    <input type="text" class="form-control" id="user_accno" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="user_pass1">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="user_pass2">
-                </div>
-                
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="user_name">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Initial Balance</label>
-                    <input type="text" class="form-control" id="user_bal">
-                </div>
-                <button type="button" class="btn btn-primary" (click)="Register()">Register</button>
-            </form>
+            </div>
+            <div class="col-lg-4 col-md-4 col-12">
+                <h1>Register Here!</h1><br><br>
+                <form style="margin-left: 20px; margin-right: 20px;">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Account Number</label>
+                        <input type="text" [(ngModel)]="user_acc" name="name_acc" class="form-control" id="user_accno"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" [(ngModel)]="user_pwd1" name="name_pwd1" class="form-control"
+                            id="user_pass1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                        <input type="password" [(ngModel)]="user_pwd2" name="name_pwd2" class="form-control"
+                            id="user_pass2">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Username</label>
+                        <input type="text" [(ngModel)]="user_name" name="name_name" class="form-control" id="user_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Initial Balance</label>
+                        <input type="text" [(ngModel)]="initial_bal" name="name_bal" class="form-control" id="user_bal">
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="Register()">Register</button>
+                </form>
 
 
-        </div>
-        <div class="col-lg-4 col-md-4 col-12">
+            </div>
+            <div class="col-lg-4 col-md-4 col-12">
 
+            </div>
         </div>
     </div>
-</div>
+</form>
