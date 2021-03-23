@@ -1,4 +1,4 @@
-<form (ngSubmit)="Register()">
+<form [formGroup]="registerForm" (ngSubmit)="Register()">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-12">
@@ -6,33 +6,58 @@
             </div>
             <div class="col-lg-4 col-md-4 col-12">
                 <h1>Register Here!</h1><br><br>
-                <form style="margin-left: 20px; margin-right: 20px;">
+                <div style="margin-left: 20px; margin-right: 20px;">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Account Number</label>
-                        <input type="text" [(ngModel)]="user_acc" name="name_acc" class="form-control" id="user_accno"
-                            aria-describedby="emailHelp">
+                        <input type="text" formControlName="user_acc" name="name_acc" class="form-control"
+                            id="user_accno" aria-describedby="emailHelp">
+                        <!-- <input type="text" [(ngModel)]="user_acc" name="name_acc" class="form-control" id="user_accno"
+                            aria-describedby="emailHelp"> -->
+                        <div style="color: red;"
+                            *ngIf="(this.registerForm.get('user_acc')?.touched||this.registerForm.get('user_acc')?.dirty)&&this.registerForm.get('user_acc')?.errors"
+                            class="error">Invalid Account Number</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" [(ngModel)]="user_pwd1" name="name_pwd1" class="form-control"
+                        <input type="password" formControlName="user_pwd1" name="name_pwd1" class="form-control"
                             id="user_pass1">
+                        <!-- <input type="password" [(ngModel)]="user_pwd1" name="name_pwd1" class="form-control"
+                            id="user_pass1"> -->
+                        <div style="color: red;"
+                            *ngIf="(this.registerForm.get('user_pwd1')?.touched||this.registerForm.get('user_pwd1')?.dirty)&&this.registerForm.get('user_pwd1')?.errors"
+                            class="error">Invalid Password</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-                        <input type="password" [(ngModel)]="user_pwd2" name="name_pwd2" class="form-control"
+                        <input type="password" formControlName="user_pwd2" name="name_pwd2" class="form-control"
                             id="user_pass2">
+                        <!-- <input type="password" [(ngModel)]="user_pwd2" name="name_pwd2" class="form-control"
+                            id="user_pass2"> -->
+                            <div style="color: red;"
+                            *ngIf="(this.registerForm.get('user_pwd2')?.touched||this.registerForm.get('user_pwd2')?.dirty)&&this.registerForm.get('user_pwd2')?.errors"
+                            class="error">Invalid Password</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Username</label>
-                        <input type="text" [(ngModel)]="user_name" name="name_name" class="form-control" id="user_name">
+                        <input type="text" formControlName="user_name" name="name_name" class="form-control"
+                            id="user_name">
+                        <!-- <input type="text" [(ngModel)]="user_name" name="name_name" class="form-control" id="user_name"> -->
+                        <div style="color: red;"
+                            *ngIf="(this.registerForm.get('user_name')?.touched||this.registerForm.get('user_name')?.dirty)&&this.registerForm.get('user_name')?.errors"
+                            class="error">Invalid Username</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Initial Balance</label>
-                        <input type="text" [(ngModel)]="initial_bal" name="name_bal" class="form-control" id="user_bal">
+                        <input type="text" formControlName="initial_bal" name="name_bal" class="form-control"
+                            id="user_bal">
+                        <!-- <input type="text" [(ngModel)]="initial_bal" name="name_bal" class="form-control" id="user_bal"> -->
+                        <div style="color: red;"
+                            *ngIf="(this.registerForm.get('initial_bal')?.touched||this.registerForm.get('initial_bal')?.dirty)&&this.registerForm.get('initial_bal')?.errors"
+                            class="error">Invalid Amount</div>
                     </div>
-                    <button type="button" class="btn btn-primary" (click)="Register()">Register</button>
-                </form>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
 
 
             </div>

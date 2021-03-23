@@ -3,21 +3,56 @@
         <div class="col-lg-4 col-md-4 col-12"></div>
         <div class="col-lg-4 col-md-4 col-12">
             <h1>Welcome User!</h1>
-            <form style="margin-top: 40px;">
+            <form [formGroup]="depositForm" style="margin-top: 40px;" (ngSubmit)="Deposit()">
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Account Number</label>
-                    <input type="text" class="form-control" id="input_accno" aria-describedby="emailHelp">
+                    <input type="text" formControlName="deposit_user_acc" class="form-control" id="d_input_accno"
+                        aria-describedby="emailHelp">
+                    <div style="color: red;"
+                        *ngIf="(this.depositForm.get('deposit_user_acc')?.touched||this.depositForm.get('deposit_user_acc')?.dirty)&&this.depositForm.get('deposit_user_acc')?.errors"
+                        class="error">Invalid Account Number</div>
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="input_pass">
+                    <input type="password" formControlName="deposit_user_pwd" class="form-control" id="d_input_pass">
+                    <div style="color: red;"
+                        *ngIf="(this.depositForm.get('deposit_user_pwd')?.touched||this.depositForm.get('deposit_user_pwd')?.dirty)&&this.depositForm.get('deposit_user_pwd')?.errors"
+                        class="error">Invalid Password</div>
                 </div>
                 <div class="mb-3">
                     <label for="inputAmount" class="form-label">Amount</label>
-                    <input type="text" class="form-control" id="input_amount">
+                    <input type="text" formControlName="deposit_user_amount" class="form-control" id="d_input_amount">
+                    <div style="color: red;"
+                        *ngIf="(this.depositForm.get('deposit_user_amount')?.touched||this.depositForm.get('deposit_user_amount')?.dirty)&&this.depositForm.get('deposit_user_amount')?.errors"
+                        class="error">Invalid Amount</div>
                 </div>
-                <button type="button" class="btn btn-primary">Deposit</button>
-                <button style="margin-left: 10px;" type="button" class="btn btn-primary">Withdraw</button>
+                <button type="button" class="btn btn-primary" (click)="Deposit()">Deposit</button>
+            </form>
+            <form [formGroup]="withdrawForm" style="margin-top: 40px;">
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Account Number</label>
+                    <input type="text" formControlName="withdraw_user_acc" class="form-control" id="w_input_accno"
+                        aria-describedby="emailHelp">
+                    <div style="color: red;"
+                        *ngIf="(this.withdrawForm.get('withdraw_user_acc')?.touched||this.withdrawForm.get('withdraw_user_acc')?.dirty)&&this.withdrawForm.get('withdraw_user_acc')?.errors"
+                        class="error">Invalid Account Number</div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <input type="password" formControlName="withdraw_user_pwd" class="form-control" id="w_input_pass">
+                    <div style="color: red;"
+                        *ngIf="(this.withdrawForm.get('withdraw_user_pwd')?.touched||this.withdrawForm.get('withdraw_user_pwd')?.dirty)&&this.withdrawForm.get('withdraw_user_pwd')?.errors"
+                        class="error">Invalid Password</div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputAmount" class="form-label">Amount</label>
+                    <input type="text" formControlName="withdraw_user_amount" class="form-control" id="w_input_amount">
+                    <div style="color: red;"
+                        *ngIf="(this.withdrawForm.get('withdraw_user_amount')?.touched||this.withdrawForm.get('withdraw_user_amount')?.dirty)&&this.withdrawForm.get('withdraw_user_amount')?.errors"
+                        class="error">Invalid Amount</div>
+                </div>
+                <button type="button" class="btn btn-primary"
+                    (click)="Withdraw()">Withdraw</button>
             </form>
         </div>
         <div class="col-lg-4 col-md-4 col-12"></div>
