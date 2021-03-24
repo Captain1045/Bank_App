@@ -35,7 +35,7 @@
                         *ngIf="(this.loginForm.get('user_pwd')?.touched||this.loginForm.get('user_pwd')?.dirty)&&this.loginForm.get('user_pwd')?.errors"
                         class="error">Invalid Password</div>
                 </div>
-                <button style="background-color: green;" type="button" class="btn btn-primary"
+                <button style="background-color: green;" type="submit" class="btn btn-primary"
                     (click)="login()">Login</button>
                 <button style="margin-left: 10px; background-color: green;" type="button" class="btn btn-primary"
                     (click)="register()">Register</button>

@@ -9,6 +9,7 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  currentUser=this.dataService.currentUser;
 
   depositForm = this.dep.group({
     deposit_user_acc: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('[0-9]*')]],
@@ -20,7 +21,9 @@ export class DashboardComponent implements OnInit {
     withdraw_user_pwd: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]],
     withdraw_user_amount: ['', [Validators.required, Validators.pattern('[0-9]*')]]
   });
-  constructor(private dataService: DataService, private router: Router, private dep: FormBuilder) { }
+  constructor(private dataService: DataService, private router: Router, private dep: FormBuilder) {
+    //this.currentUser=this.dataService.currentUser;
+   }
 
   ngOnInit(): void {
   }

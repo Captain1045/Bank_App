@@ -41,23 +41,24 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       var acc = this.loginForm.value.user_acc;
       var pwd = this.loginForm.value.user_pwd;
+      this.dataService.login(parseInt(acc),pwd);
       //console.log(acc,this.user_acc);
-      if (acc in this.data) {
-        //console.log(data[user_acc]["pass"]);
-        //alert(this.user_acc);
-        if (pwd == this.data[acc]["pass"]) {
-          alert("Authentication Successful");
-          //window.location.href = "dashboard";
-          this.router.navigateByUrl("dashboard");
-        }
-        else {
-          alert("Incorrect Password!");
-        }
+      // if (acc in this.data) {
+      //   //console.log(data[user_acc]["pass"]);
+      //   //alert(this.user_acc);
+      //   if (pwd == this.data[acc]["pass"]) {
+      //     alert("Authentication Successful");
+      //     //window.location.href = "dashboard";
+      //     this.router.navigateByUrl("dashboard");
+      //   }
+      //   else {
+      //     alert("Incorrect Password!");
+      //   }
 
-      }
-      else {
-        alert("Invalid Account Number!");
-      }
+      // }
+      // else {
+      //   alert("Invalid Account Number!");
+      // }
 
     }
     else{

@@ -13,19 +13,43 @@ export class DataService {
     1004: { accno: 1004, name: "Hari", bal: 6000, pass: "user4" },
   }
   currentUser="";
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+    this.getDetails();
+  }
+
+  saveDetails()
+  {
+    localStorage.setItem("accountDetails",JSON.stringify(this.accountDetails));
+    if(this.currentUser)
+    {
+      localStorage.setItem("currentUser",JSON.stringify(this.currentUser));
+    }
+  }
+  getDetails()
+  {
+    if(localStorage.getItem("accountDetails"))
+    {
+      this.accountDetails=JSON.parse(localStorage.getItem("accountDetails")||'');
+    }
+    if(localStorage.getItem("currentUser"))
+    {
+      this.currentUser=JSON.parse(localStorage.getItem("currentUser")||'')
+    }
+  }
 
   deposit(acc_no: any, password: any, amount: any) {
+    this.getDetails();
     let data = this.accountDetails;
     if (acc_no in data) {
       // alert(data[acc_no].pass);
       // alert(password);
-      if (data[acc_no].pass == password) {
+      if ((data[acc_no].pass == password)&&(data[acc_no].name==this.currentUser)) {
         data[acc_no].bal += amount;
         alert("Available Balance = " + data[acc_no].bal);
+        this.saveDetails();
       }
       else {
-        alert("Incorrect password! Please try again");
+        alert("Incorrect data! Please try again");
         this.router.navigateByUrl("dashboard");
       }
     }
@@ -34,12 +58,14 @@ export class DataService {
     }
   }
   withdraw(acc_no: any, password: any, amount: any) {
+    this.getDetails();
     let data = this.accountDetails;
     if (acc_no in data) {
-      if (data[acc_no].pass == password) {
+      if ((data[acc_no].pass == password)&&(data[acc_no].name==this.currentUser)) {
         if (data[acc_no].bal < amount) {
 
           alert("Insufficient Balance\nAvailable Balance = " + data[acc_no].bal);
+          this.saveDetails();
         }
         else {
           data[acc_no].bal -= amount;
@@ -48,7 +74,7 @@ export class DataService {
 
       }
       else {
-        alert("Incorrect password! Please try again");
+        alert("Incorrect data! Please try again");
         this.router.navigateByUrl("dashboard");
       }
 
@@ -57,6 +83,27 @@ export class DataService {
       alert("No User exist! Please try again");
     }
 
+  }
+  login(acc:any,pwd:any)
+  {
+    if (acc in this.accountDetails) {
+      //console.log(data[user_acc]["pass"]);
+      //alert(this.user_acc);
+      if (pwd == this.accountDetails[acc]["pass"]) {
+        this.currentUser=this.accountDetails[acc].name;
+        this.saveDetails();
+        alert("Authentication Successful");
+        //window.location.href = "dashboard";
+        this.router.navigateByUrl("dashboard");
+      }
+      else {
+        alert("Incorrect Password!");
+      }
+
+    }
+    else {
+      alert("Invalid Account Number!");
+    }
   }
   registerData(accno: any, name: any, bal: any, pass: any) {
     if (accno in this.accountDetails) {
@@ -70,6 +117,7 @@ export class DataService {
         bal,
         pass
       }
+      this.saveDetails();
       alert(`Registration Successful!\n`)
       console.log(this.accountDetails);
     }

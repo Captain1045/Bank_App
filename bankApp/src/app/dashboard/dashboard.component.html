@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-4 col-md-4 col-12"></div>
         <div class="col-lg-4 col-md-4 col-12">
-            <h1>Welcome User!</h1>
+            <h1>Welcome {{currentUser}}</h1>
             <form [formGroup]="depositForm" style="margin-top: 40px;" (ngSubmit)="Deposit()">
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Account Number</label>
@@ -26,9 +26,9 @@
                         *ngIf="(this.depositForm.get('deposit_user_amount')?.touched||this.depositForm.get('deposit_user_amount')?.dirty)&&this.depositForm.get('deposit_user_amount')?.errors"
                         class="error">Invalid Amount</div>
                 </div>
-                <button type="button" class="btn btn-primary" (click)="Deposit()">Deposit</button>
+                <button type="submit" class="btn btn-primary">Deposit</button>
             </form>
-            <form [formGroup]="withdrawForm" style="margin-top: 40px;">
+            <form [formGroup]="withdrawForm" style="margin-top: 40px;" (ngSubmit)="Withdraw()">
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Account Number</label>
                     <input type="text" formControlName="withdraw_user_acc" class="form-control" id="w_input_accno"
@@ -51,8 +51,8 @@
                         *ngIf="(this.withdrawForm.get('withdraw_user_amount')?.touched||this.withdrawForm.get('withdraw_user_amount')?.dirty)&&this.withdrawForm.get('withdraw_user_amount')?.errors"
                         class="error">Invalid Amount</div>
                 </div>
-                <button type="button" class="btn btn-primary"
-                    (click)="Withdraw()">Withdraw</button>
+                <button type="submit" class="btn btn-primary"
+                    >Withdraw</button>
             </form>
         </div>
         <div class="col-lg-4 col-md-4 col-12"></div>
