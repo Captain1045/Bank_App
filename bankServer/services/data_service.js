@@ -1,4 +1,4 @@
-
+const db=require("./db.js")
 accountDetails = {
     1001: { accno: 1001, name: "Amal", bal: 3000, pass: "user1" },
     1002: { accno: 1002, name: "Arun", bal: 5000, pass: "user2" },

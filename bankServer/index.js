@@ -23,6 +23,8 @@ const authenticateMiddleware=(req,res,next)=>{
     next();
     }
 }
+app.use(express.json());
+app.use(logMiddleware);
 app.use(session({
     secret: "randomsecurestring",
     resave: false,
