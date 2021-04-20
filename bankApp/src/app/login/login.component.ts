@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   // temp_data="Testing by Interpolation";
   // user_acc = "";
   // user_pwd = "";
-  data = this.dataService.accountDetails;
+  //data = this.dataService.accountDetails;
   loginForm = this.fb.group({
     user_acc: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('[0-9]*')]],
     user_pwd: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]]
@@ -27,38 +27,25 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // getUsername(event: any) {
-  //   this.user_acc = event.target.value;
-  //   console.log(this.user_acc);
-  // }
-  // getPassword(event: any) {
-  //   this.user_pwd = event.target.value;
-  //   console.log(this.user_pwd);
-  // }
   login() {
     // var user_acc=acc.value;
     // var user_pwd=pwd.value;
     if (this.loginForm.valid) {
-      var acc = this.loginForm.value.user_acc;
-      var pwd = this.loginForm.value.user_pwd;
-      this.dataService.login(parseInt(acc),pwd);
-      //console.log(acc,this.user_acc);
-      // if (acc in this.data) {
-      //   //console.log(data[user_acc]["pass"]);
-      //   //alert(this.user_acc);
-      //   if (pwd == this.data[acc]["pass"]) {
-      //     alert("Authentication Successful");
-      //     //window.location.href = "dashboard";
-      //     this.router.navigateByUrl("dashboard");
-      //   }
-      //   else {
-      //     alert("Incorrect Password!");
-      //   }
+      var accno = this.loginForm.value.user_acc;
+      var pass = this.loginForm.value.user_pwd;
+      this.dataService.login(parseInt(accno),pass).subscribe((data:any) => {
+        if (data) {
+          alert(data.message);
+          //console.log(data.name);
+          
+          localStorage.setItem("name",data.name);
+          localStorage.setItem("accno",data.accno);
+          this.router.navigateByUrl("dashboard");
+        }
+      }, (data) => {
+        alert(data.error.message);
 
-      // }
-      // else {
-      //   alert("Invalid Account Number!");
-      // }
+      });
 
     }
     else{

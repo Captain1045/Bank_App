@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-4 col-md-4 col-12"></div>
         <div class="col-lg-4 col-md-4 col-12">
-            <h1>Welcome {{currentUser}}</h1>
+            <h1 appHighlight style="margin-top: 20px;">Welcome {{name}}</h1>
             <form [formGroup]="depositForm" style="margin-top: 40px;" (ngSubmit)="Deposit()">
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Account Number</label>
@@ -51,9 +51,14 @@
                         *ngIf="(this.withdrawForm.get('withdraw_user_amount')?.touched||this.withdrawForm.get('withdraw_user_amount')?.dirty)&&this.withdrawForm.get('withdraw_user_amount')?.errors"
                         class="error">Invalid Amount</div>
                 </div>
-                <button type="submit" class="btn btn-primary"
-                    >Withdraw</button>
+                <button type="submit" class="btn btn-primary">Withdraw</button>
             </form>
+            <div>
+
+                <button style="margin-top: 30px; background-color: rgb(216, 7, 7);" type="button"
+                    class="btn btn-primary" (click)="Delete()">Delete Account</button>
+                <app-delete-confirmation (onCancel)="onCancel()" (onDelete)="onDelete($event)" [item]="id"></app-delete-confirmation>
+            </div>
         </div>
         <div class="col-lg-4 col-md-4 col-12"></div>
     </div>

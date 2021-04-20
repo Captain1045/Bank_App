@@ -1,0 +1,7 @@
+<div *ngIf="item != null" class="delete">
+    <p>Are you sure to delete this account with Account Number : {{item}} ?</p>
+    <button style="margin-left: 10px; background-color: green;" type="button" class="btn btn-primary"
+        (click)="Confirm()">Confirm</button>
+    <button style="margin-left: 10px; background-color: green;" type="button" class="btn btn-primary"
+        (click)="Cancel()">Cancel</button>
+</div>

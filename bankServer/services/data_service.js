@@ -1,96 +1,106 @@
-const db=require("./db.js")
-accountDetails = {
-    1001: { accno: 1001, name: "Amal", bal: 3000, pass: "user1" },
-    1002: { accno: 1002, name: "Arun", bal: 5000, pass: "user2" },
-    1003: { accno: 1003, name: "Ajay", bal: 7000, pass: "user3" },
-    1004: { accno: 1004, name: "Hari", bal: 6000, pass: "user4" },
-}
+const db = require("./db.js")
+// accountDetails = {
+//     1001: { accno: 1001, name: "Amal", bal: 3000, pass: "user1" },
+//     1002: { accno: 1002, name: "Arun", bal: 5000, pass: "user2" },
+//     1003: { accno: 1003, name: "Ajay", bal: 7000, pass: "user3" },
+//     1004: { accno: 1004, name: "Hari", bal: 6000, pass: "user4" },
+// }
 
 const registerData = (accno, name, bal, pass) => {
-    if (accno in accountDetails) {
-        return {
-            status: false,
-            statusCode: 422,
-            message: "User Exists! Please Login "
-        }
-        // alert("User Exists! Please Login ");
-        // return false;
-    }
-    else {
-        accountDetails[accno] = {
-            accno,
-            name,
-            bal,
-            pass
-        }
-        //this.saveDetails();
-        return {
-            status: true,
-            statusCode: 200,
-            message: "Registration Successful!"
-        }
-        // alert(`Registration Successful!\n`)
-        // console.log(accountDetails);
-    }
-    //return true;
-}
-const login = (req, acc, pwd) => {
-    if (acc in accountDetails) {
-        //console.log(data[user_acc]["pass"]);
-        //alert(this.user_acc);
-        if (pwd == accountDetails[acc]["pass"]) {
-            req.session.currentUser = accountDetails[acc].name;
-            // this.saveDetails();
-            // alert("Authentication Successful");
-            // //window.location.href = "dashboard";
-            // this.router.navigateByUrl("dashboard");
-            return {
-                status: true,
-                statusCode: 200,
-                //currentUser: req.session.currentUser,
-                message: "Authentication Successful"
-            }
-        }
-        else {
-            //alert("Incorrect Password!");
+    return db.User.findOne({ accno }).then(userone => {
+
+        if (userone) {
             return {
                 status: false,
                 statusCode: 422,
-                message: "Incorrect Password!"
+                message: "User Exists! Please Login "
             }
         }
+        else {
+            const newUser = new db.User({
+                accno,
+                name,
+                bal,
+                pass
+            });
+            newUser.save();
+            return {
+                status: true,
+                statusCode: 200,
+                message: "Registration Successful!"
+            }
 
-    }
-    else {
-        //alert("Invalid Account Number!");
-        return {
-            status: false,
-            statusCode: 422,
-            message: "Invalid Account Number!"
         }
-    }
+    });
+
 }
-const deposit = (req, acc_no, password, amount) => {
-    if (req.session.currentUser != accountDetails[acc_no].name) {
-        return {
-            status: false,
-            statusCode: 422,
-            message: "Please Log in!"
-        }
-    }
-    else {
-        let data = accountDetails;
-        if (acc_no in data) {
-            // alert(data[acc_no].pass);
-            // alert(password);
-            if ((data[acc_no].pass == password)) {//&&(data[acc_no].name==this.currentUser)) {
-                data[acc_no].bal += amount;
+const login = (req, acc_no, password) => {
+    var accno = parseInt(acc_no);
+    //console.log(accno);
+    return db.User.findOne({ accno}).then(user => {
+        if (user) {
+            if (password == user.pass) {
+                req.session.currentUser = user;
+                //console.log(user.name);
                 return {
                     status: true,
                     statusCode: 200,
-                    message: "Available Balance = " + data[acc_no].bal
+                    message: "Authentication Successful",
+                    name: user.name,
+                    accno: user.accno
                 }
-                //alert("Available Balance = " + data[acc_no].bal);
+            }
+            else {
+                return {
+                    status: false,
+                    statusCode: 422,
+                    message: "Incorrect Password!"
+                }
+            }
+        }
+        else {
+            return {
+                status: false,
+                statusCode: 422,
+                message: "Invalid Account Number!"
+            }
+
+        }
+
+    });
+}
+const deposit = (req, accno, password, bal) => {
+    var amt = parseInt(bal);
+    return db.User.findOne({ accno, pass: password }).then(data => {
+        //console.log(parseInt(accno));
+        //console.log(req.session.currentUser.accno);
+        if (req.session.currentUser.accno != parseInt(accno)) {
+            return {
+                status: false,
+                statusCode: 422,
+                message: "Unauthorized Opertion! "
+            }
+
+        }
+        else if (!data) {
+            return {
+                status: false,
+                statusCode: 422,
+                message: "No User exist! Please try again"
+            }
+        }
+        else {
+            if ((data.pass == password)) {
+                //console.log(typeof(data.bal));
+                //console.log(data.bal);
+                //console.log(amt);
+                data.bal += amt;
+                data.save();
+                return {
+                    status: true,
+                    statusCode: 200,
+                    message: "Available Balance = " + data.bal
+                }
             }
             else {
                 return {
@@ -98,51 +108,41 @@ const deposit = (req, acc_no, password, amount) => {
                     statusCode: 422,
                     message: "Incorrect data! Please try again"
                 }
-                //alert("Incorrect data! Please try again");
             }
         }
+    });
+}
+const withdraw = (req, accno, password, amount) => {
+    var amt = parseInt(amount);
+    return db.User.findOne({ accno, pass: password }).then(data => {
 
-        else {
+        if (req.session.currentUser.accno != parseInt(accno)) {
             return {
                 status: false,
                 statusCode: 422,
-                message: "No User exist! Please try again"
+                message: "Unauthorized Operation! "
             }
-            //alert("No User exist! Please try again");
+
         }
-    }
-}
-const withdraw = (req, acc_no, password, amount) => {
-    if (req.session.currentUser != accountDetails[acc_no].name) {
-        return {
-            status: false,
-            statusCode: 422,
-            message: "Please Log in!"
-        }
-    }
-    else {
-        let data = accountDetails;
-        if (acc_no in data) {
-            if ((data[acc_no].pass == password)) {//&&(data[acc_no].name==this.currentUser)) {
-                if (data[acc_no].bal < amount) {
+        else if (data) {
+            if ((data.pass == password)) {
+                if (data.bal < amt) {
 
                     return {
                         status: false,
                         statusCode: 422,
-                        message: "Insufficient Balance   Available Balance = " + data[acc_no].bal
+                        message: "Insufficient Balance   Available Balance = " + data.bal
                     }
-                    // alert("Insufficient Balance\nAvailable Balance = " + data[acc_no].bal);
                 }
                 else {
-                    data[acc_no].bal -= amount;
+                    data.bal -= amt;
+                    data.save();
                     return {
                         status: true,
                         statusCode: 200,
-                        message: "Available Balance = " + data[acc_no].bal
+                        message: "Available Balance = " + data.bal
                     }
-                    //alert("Available Balance = " + data[acc_no].bal);
                 }
-
             }
             else {
                 return {
@@ -150,9 +150,7 @@ const withdraw = (req, acc_no, password, amount) => {
                     statusCode: 422,
                     message: "Incorrect data! Please try again"
                 }
-                //alert("Incorrect data! Please try again");
             }
-
         }
         else {
             return {
@@ -160,9 +158,9 @@ const withdraw = (req, acc_no, password, amount) => {
                 statusCode: 422,
                 message: "No User exist! Please try again"
             }
-            //alert("No User exist! Please try again");
+
         }
-    }
+    });
 }
 module.exports = {
     registerData,

@@ -29,25 +29,25 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
   Register() {
-    //window.location.href="";
-    // console.log(this.registerForm.value);
-    // console.log(this.registerForm.get('user_acc')?.errors);
-
-    // if (this.registerForm.get('user_acc')?.errors) {
-    //   alert("invalid acc no");
-    // }
     if (this.registerForm.valid) {
-
-      // alert(`Registration Successful!\n`)
-      //console.log(parseInt(this.user_acc),this.user_name,this.user_pwd1,parseInt(this.initial_bal));
       if (this.registerForm.value.user_pwd1 == this.registerForm.value.user_pwd2) {
-        var result = this.dataService.registerData(parseInt(this.registerForm.value.user_acc), this.registerForm.value.user_name, parseInt(this.registerForm.value.initial_bal), this.registerForm.value.user_pwd1);
-        this.router.navigateByUrl("");
+        this.dataService.registerData(parseInt(this.registerForm.value.user_acc), this.registerForm.value.user_name, parseInt(this.registerForm.value.initial_bal), this.registerForm.value.user_pwd1).
+          subscribe((data:any) => {
+            if (data) {
+              alert(data.message);
+              this.router.navigateByUrl("");
+            }
+          }, (data) => {
+            alert(data.console.error.message);
+
+          });
+
       }
       else {
+        
+        this.registerForm.value.user_pwd1 = " ";
+        this.registerForm.value.user_pwd2 = " ";
         alert("Password Mismatch! Try again");
-        this.registerForm.value.user_pwd1 = "";
-        this.registerForm.value.user_pwd2 = "";
       }
     }
     else {
