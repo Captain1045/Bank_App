@@ -33,13 +33,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       var accno = this.loginForm.value.user_acc;
       var pass = this.loginForm.value.user_pwd;
-      this.dataService.login(parseInt(accno),pass).subscribe((data:any) => {
+      this.dataService.login(parseInt(accno), pass).subscribe((data: any) => {
         if (data) {
           alert(data.message);
           //console.log(data.name);
-          
-          localStorage.setItem("name",data.name);
-          localStorage.setItem("accno",data.accno);
+
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("accno", data.accno);
           this.router.navigateByUrl("dashboard");
         }
       }, (data) => {
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       });
 
     }
-    else{
+    else {
       alert("Please Enter valid credentials!")
     }
   }
